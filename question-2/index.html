@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Assesment Question 2</title>
+	<script src="https://threejs.org/build/three.min.js"></script>
+	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<link rel="stylesheet" href="../server/general.css">	
+	<style type="text/css">
+		html,
+		body
+		{
+			height: 100%;
+			width: 100%;
+		}
+		body{
+			display: grid;
+			grid-template-rows:
+				min-content 1fr;
+			grid-template-columns:
+				repeat(2, 1fr);
+			grid-template-areas:
+				"header header"
+				"content three";
+			grip-gap: 1em;
+		}
+		header { grid-area:  header; }
+		.contentFlow { grid-area:  content; }
+		.description { grid-area:  description; }
+		.requirements { grid-area:  requirements; }
+		.linkTable { grid-area:  links; }
+		.threeWindow { grid-area:  three; }
+
+		.vFlow {
+			display: flex;
+			flex-direction: column;
+			gap:  1em;
+
+		}
+		.vFlow .linkTable
+		{
+			justify-self: flex-end;
+		}
+	</style>
+
+</head>
+<body>
+	<header>
+		<h1>Assesment Question 2</h1>
+		<subtitle>Introduction to d3</subtitle>
+	</header>
+	<div class="contentFlow vFlow">
+		<div class="description">
+			<h2>Description</h2>
+			<h3>Primary</h3>
+			<p>To the right you should see a red sphere with a white wireframe, and a single pink square/point all on a black background. This has been created using the <a href='https://threejs.org/'>threeJS</a> library which is used to bring OpenGL and 3D graphics to the web. We use this library internally for some of our tools. The code used to draw the object on the right is located in the <em>javascript file</em> located in this folder.</p>
+			<p>Your task will be to add some minor features to the window. The first part will be to add <em>navigation controls</em> to the window so that you can orbit around the object. The other will be to add an object to the scene at a specified point on the page, as if it is orbiting the sphere.</p>
+			<h3>Extension</h3>
+			<p>There is also a very basic <a href='https://expressjs.com/'>expressJS</a> sevrer located in the <code>~/server</code> folder. You can run the server by using node and running the command <code>npm run start</code>. This server uses <em><a href='https://www.typescriptlang.org/'>Typescript</a>, the <a href='https://www.npmjs.com/'>Node Package Manager</a>, and <a href='https://expressjs.com/'>ExpressJS</a>.</em> You should be able to install these by running the command <code>npm install</code>. Write a basic API request to get details from the server as to what (a) colour to draw the sphere, and (b) where to draw the orbiting object.</p>
+			<p>You do <em>not</em> need to use the server provided if you wish to choose another system. Just include how you would write it if this is the case</p>
+		</div>
+		<div class="requirements">
+			<h2>Requirements</h2>
+			<ul>
+				<li>Able to navigate the scene
+					<ul>
+						<li>Can pan through the scene</li>
+						<li>Can orbit the object(s)</li>
+						<li>Can zoom in/out</li>						
+					</ul>
+				</li>
+				<li>An object is drawn around the object</li>
+				<li>The code uses the threeJs library</li>
+				<li>There is a method to fetch colour information from a "server"</li>
+				<li>There is a method to location information from a "server"</li>
+			</ul>
+		</div>
+		<div class="linkTable">
+			<h2>Helpful Links</h2>
+			<table class="recomendationTable">
+				<thead><tr>
+					<th>Title</th>
+					<th>URL</th>
+					<th>Description</th>
+				</tr></thead>
+				<tbody>
+					<tr>
+						<td>three.js Library</td>
+						<td><a href='https://threejs.org/'>https://threejs.org/</a></td>
+						<td>The project page for the three.js library</td>
+					</tr>
+					<tr>
+						<td>ExpressJS</td>
+						<td><a href='https://expressjs.com/'>https://expressjs.com/</a></td>
+						<td>The Express JS Library</td>
+					</tr>
+					<tr>
+						<td>Typescript</td>
+						<td><a href='https://www.typescriptlang.org/'>https://www.typescriptlang.org/</a></td>
+						<td>Typescript Language</td>
+					</tr>
+					<tr>
+						<td>Node Package Manager</td>
+						<td><a href='https://www.npmjs.com/'>https://www.npmjs.com/</a></td>
+						<td>The node package manager</td>
+					</tr>
+					<tr>
+						<td>RESTful APIs</td>
+						<td><a href='https://www.geeksforgeeks.org/rest-api-introduction/'>https://www.geeksforgeeks.org/rest-api-introduction/</a></td>
+						<td>Basic introduction to RESTful APIs</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="threeWindow"></div>
+	<script src="index.js"></script>
+</body>
+</html>

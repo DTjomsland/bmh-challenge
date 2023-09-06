@@ -1,0 +1,18 @@
+{
+  "name": "example-server",
+  "version": "1.0.0",
+  "description": "Example server to use to build off of",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc app.ts",
+    "start": "npm run compile && node --trace-warnings app.js"
+  },
+  "author": "[TBB] Alfred Burgess",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "express": "^4.18.2",
+    "typescript": "^5.2.2"
+  }
+}

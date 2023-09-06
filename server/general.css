@@ -1,0 +1,64 @@
+html,
+body
+{
+	width: 100%;
+	height: 100%;
+	color: #333333;
+	font-family: sans-serif;
+	margin:  0;
+	padding:  0;
+	overflow: hidden;
+	text-align: left;
+}
+p { padding:  1em;  }
+header {
+	position: sticky;
+	top: 0;
+	background: white;
+	z-index: 1;
+	border-bottom:
+		2px solid #00B7F5;
+}
+header subtitle {
+	margin-left: 2rem;
+	font-family: serif;
+	font-size: 15pt;
+	font-style: italic;
+}
+h1 { padding-left: 0.5em;  }
+h2 { padding-left: 0.5em;  }
+
+.recomendationTable
+{
+	padding: 0;
+	width: 100%;
+	text-align: left;
+}
+.recomendationTable thead {
+	font-size: large;
+}
+.recomendationTable thead th { padding-left: 1.5ch; }
+.recomendationTable tbody tr {
+	background: #B9EDFF;
+	transition: 200ms filter ease;
+	transition-delay: 0ms;
+}
+.recomendationTable tbody tr:nth-child(2n) { background: #C1FCFF; }
+.recomendationTable tbody:hover tr:not(:hover)
+{
+	filter:
+		blur(2px)
+		grayscale(0.75);
+}
+.recomendationTable td { padding: 0.5rem 0.75em; }
+
+.contentFlow
+{
+	overflow: auto;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	padding: 0;
+	grid-gap: 1em;
+	gap: 1em;
+}
