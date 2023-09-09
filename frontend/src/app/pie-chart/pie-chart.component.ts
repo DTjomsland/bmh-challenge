@@ -37,12 +37,11 @@ export class PieChartComponent implements OnInit {
   }
 
   private createSvg(): void {
-    const parent = this.el.nativeElement;
-    this.width = parent.offsetWidth;
+    this.width = window.innerWidth
     this.height = this.width;
     this.radius = Math.min(this.width, this.height) / 2 - this.margin;
 
-    d3.select(this.svgElement.nativeElement).selectAll('*').remove();
+    d3.select("#piechart").selectAll('*').remove();
 
     this.svg = d3
       .select(this.svgElement.nativeElement)
