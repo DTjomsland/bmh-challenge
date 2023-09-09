@@ -1,11 +1,43 @@
-var renderer, scene, camera, controls;
+var colorData, positionData, renderer, scene, camera, controls;
 
-init();
-animate();
+
+
+// api url
+const apiUrl = 'http://localhost:1337';
+
+// api fetch function
+function fetchData(url) {
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      throw error;
+    });
+}
+
+// fetch the data and make sure it is available before creating scene
+Promise.all([fetchData(`${apiUrl}/color`), fetchData(`${apiUrl}/position`)])
+  .then((responses) => {
+    colorData = responses[0];
+    positionData = responses[1];
+    console.log(colorData.firstMoonColor);
+    console.log(positionData);
+    init();
+    animate();
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+
 
 function init() {
-	if( !THREE )
-		{ return; }
+  if (!THREE) { return; }
   // renderer
   renderer = new THREE.WebGLRenderer();
   document.body.querySelector('.threeWindow').appendChild(renderer.domElement);
@@ -21,23 +53,25 @@ function init() {
   camera.lookAt(0.0, 0.0, 0.0);
 
   // controls
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  // enable features
+  controls.enablePan = true;
+  controls.enableZoom = true;
 
   var light = new THREE.HemisphereLight(0xeeeeee, 0x888888, 1);
   light.position.set(0, 20, 0);
   scene.add(light);
-
-  // axes
-  //scene.add(new THREE.AxisHelper(60));
 
   // geometry
   var geometry = new THREE.SphereGeometry(5, 12, 8);
 
   // material
   var material = new THREE.MeshPhongMaterial({
-    color: 0xff0000,
+    color: colorData.secondMoonColor,
     shading: THREE.FlatShading,
     polygonOffset: true,
-    polygonOffsetFactor: 1, // positive value pushes polygon further away
+    polygonOffsetFactor: 1, 
     polygonOffsetUnits: 1
   });
 
@@ -47,7 +81,7 @@ function init() {
 
 
   // wireframe
-  var geo = new THREE.EdgesGeometry(mesh.geometry); // or WireframeGeometry
+  var geo = new THREE.EdgesGeometry(mesh.geometry); 
   var mat = new THREE.LineBasicMaterial({
     color: 0xffffff,
     linewidth: 2
@@ -56,34 +90,53 @@ function init() {
   mesh.add(wireframe);
 
 
-  // dot example
-  var dotGeometry = new THREE.BufferGeometry();
-  var dotVertices = new Float32Array([
-    4.0, 4.0, 0.0
-  ]);
-  dotGeometry.setAttribute('position', new THREE.BufferAttribute(dotVertices, 3));
 
-  var dotMaterial = new THREE.PointsMaterial({
-    size: 1,
-    sizeAttenuation: true,
-    color: 0xff00ff
+  // added a moon to the scene
+  var moonGeometry = new THREE.SphereGeometry(1, 12, 8);
+  var moonMaterial = new THREE.MeshPhongMaterial({
+    color: colorData.firstMoonColor,
+    polygonOffset: true,
+    polygonOffsetFactor: 1,
+    polygonOffsetUnits: 1,
   });
-  var dot = new THREE.Points(dotGeometry, dotMaterial);
-  scene.add(dot);
+  var moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
+  moonMesh.position.set(
+    positionData.firstMoonPosition.x,
+    positionData.firstMoonPosition.y,
+    positionData.firstMoonPosition.z
+  );
+  scene.add(moonMesh);
+
+  //added a moon ring
+  const ringGeometry = new THREE.RingGeometry(1.2, 1.5, 32);
+  const ringMaterial = new THREE.MeshBasicMaterial({
+    color: colorData.secondMoonColor,
+    side: THREE.DoubleSide,
+  });
+  const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+  ring.position.set(
+    positionData.firstMoonPosition.x,
+    positionData.firstMoonPosition.y,
+    positionData.firstMoonPosition.z
+  );
+  scene.add(ring);
 
 }
 
+
+
 function animate() {
   requestAnimationFrame(animate);
-
   var width = renderer.domElement.clientWidth;
   var height = renderer.domElement.clientHeight;
-  
+
   renderer.setPixelRatio(1);
 
   renderer.setSize(renderer.domElement.clientWidth, renderer.domElement.clientHeight, false);
 
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
+
+  controls.update();
   renderer.render(scene, camera);
 }
