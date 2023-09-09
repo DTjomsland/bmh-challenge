@@ -75,7 +75,6 @@ export class PieChartComponent implements OnInit {
       .attr('stroke', '#ffffff')
       .style('stroke-width', '2px');
 
-      
     // Add labels
     const labelLocation = d3.arc().innerRadius(100).outerRadius(this.radius);
 
