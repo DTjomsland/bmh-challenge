@@ -17,10 +17,7 @@ export class PieChartComponent implements OnInit {
 
   @ViewChild('pieChart', { static: true }) private svgElement!: ElementRef;
 
-  constructor(
-    private dataService: DataService,
-    private el: ElementRef
-  ) {}
+  constructor(private dataService: DataService, private el: ElementRef) {}
 
   ngOnInit(): void {
     this.loadChartData();
@@ -36,13 +33,15 @@ export class PieChartComponent implements OnInit {
     });
   }
 
-  // Create the SVG 
+  // Create the SVG
   private createSvg(): void {
-    this.width = window.innerWidth
+    this.width = window.innerWidth;
     this.height = this.width;
     this.radius = Math.min(this.width, this.height) / 2 - this.margin;
 
-    d3.select("#piechart").selectAll('*').remove();
+    // Remove previous SVG
+    const svgContainer = d3.select(this.svgElement.nativeElement);
+    svgContainer.selectAll('*').remove();
 
     this.svg = d3
       .select(this.svgElement.nativeElement)
@@ -118,8 +117,6 @@ export class PieChartComponent implements OnInit {
       .attr('x', 0)
       .attr('dy', '1.2em');
   }
-
-  
 
   // Reload data and update the pie chart
   reloadData() {
