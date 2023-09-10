@@ -36,6 +36,7 @@ export class PieChartComponent implements OnInit {
     });
   }
 
+  // Create the SVG 
   private createSvg(): void {
     this.width = window.innerWidth
     this.height = this.width;
